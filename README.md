@@ -8,29 +8,41 @@ both models should have the same mount of information.
 Step 1:
 
 ```
-$ npm i
+$ npm i && bower i
 ```
 
 Step 2:
 
-Edit `run-test.js` file and update `const apis = [...];` array.
-The array contains a list of APIs to parse. Each array element contains an
-array where index 0 contains the path to the RAML / OAS file and index 1
-has API type name (RAML 1.0, RAML 0.8, OAS 1.0 end so on).
+Put the APIs to analyze in the `apis/` folder. Each API to be a zip file containing the API.
 
 Step 3:
 
 ```
-$ node run-test
+$ node run-tests.js
 ```
 
-## Alternative implementation
+It prints report in the terminal when finished.
+
+Results are saved in `report.json` file. This file can be read by loading  `index.html` file in a web server.
+
+
+## Command options
 
 ```
-const {AmfJsParserTestRunner} = require('amf-raml-parser-tests');
-const testInstance = new AmfJsParserTestRunner('path/to/api.raml', 'RAML 1.0');
-return testInstance.run()
-.then((report) => {
-  console.log(report);
-});
+$ node run-tests.js --ci --sample 1 --dir "test/"
 ```
+
+**--ci**
+
+When set it will try to guess what the main file of the API is. If not used it
+will ask each time when can't determine the API.
+
+
+**--sample [number]**
+
+Set sample size. Value from 0 to 100. An option `--sample 2` sets the sample size to
+2% of all apis in the `apis/` directory.
+
+
+**--dir [string]**
+The location of the APIs.

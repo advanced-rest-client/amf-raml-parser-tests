@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <title>AMF - RMAL parsers test</title>
+    <script src="../webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="../shadycss/apply-shim.html">
+    <link rel="import" href="../polymer/lib/elements/custom-style.html">
+    <link rel="import" href="../polymer/lib/elements/dom-bind.html">
+    <link rel="import" href="../polymer/lib/elements/dom-if.html">
+    <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+    <link rel="import" href="../paper-styles/default-theme.html">
+    <link rel="import" href="../paper-styles/typography.html">
+    <link rel="import" href="../paper-styles/shadow.html">
+    <custom-style>
+      <style is="custom-style">
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #F5F5F5;
+      }
+
+      h1 {
+        @apply --paper-font-headline;
+      }
+
+      h2 {
+        @apply --paper-font-title;
+      }
+
+      h3 {
+        @apply --paper-font-subhead;
+      }
+
+      .page {
+        padding: 20px;
+        margin: 24px auto;
+        max-width: 900px;
+        @apply --shadow-elevation-2dp;
+        background-color: #fff;
+      }
+
+      .bar {
+        display: block;
+        position: relative;
+        height: 40px;
+        width: 100%;
+        background-color: var(--error-color, red);
+        @apply --layout-horizontal;
+        @apply --layout-center;
+      }
+
+      .spacer {
+        @apply --layout-flex;
+      }
+
+      .bar-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        background-color: var(--google-green-500, green);
+        z-index: 1;
+      }
+
+      .perc-progress-label {
+        @apply --paper-font-body1;
+        font-size: 24px;
+        color: #fff;
+        z-index: 2;
+        position: relative;
+        padding: 0 12px;
+      }
+
+      .success {
+        color: var(--google-green-500, green);
+      }
+
+      .error {
+        color: var(--error-color, red);
+      }
+
+      .item-message {
+        padding-left: 12px;
+      }
+
+      .api-result {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px #9E9E9E solid;
+      }
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <dom-bind id="demo">
+      <template>
+        <template is="dom-if" if="[[loading]]">
+          <p>Loading data</p>
+        </template>
+        <template is="dom-if" if="[[hasData]]">
+          <div class="page">
+            <h1>Test results</h1>
+            <div class="bar">
+              <span class="perc-progress-label">[[processedOkperc]]%</span>
+              <div class="bar-progress" style$="[[_computeProgress(processedOkperc)]]"></div>
+              <span class="spacer"></span>
+              <span class="perc-progress-label">[[processedFailperc]]%</span>
+            </div>
+            <summary>
+              <p>Processed [[processedSize]] apis</p>
+              <p>Succeeded [[processedOk]] apis</p>
+              <p>Failed [[processedFail]] apis</p>
+            </summary>
+
+            <h2>Test details</h2>
+
+            <template is="dom-repeat" items="[[reportData.reports]]">
+              <section class="api-result">
+                <h3 class$="[[_computeReportResultClass(item.report.success)]]">[[item.report.api]]</h3>
+
+                <template is="dom-repeat" items="[[item.report.logs]]">
+                  <p class$="item-message [[_computeReportResultClass(item.success)]]">
+                    <span>[[item.message]]</span>
+                    <template is="dom-if" if="[[_itemHasArguments(item.type)]]">
+                      [[item.args]]
+                    </template>
+                  </p>
+                </template>
+              </section>
+            </template>
+          </div>
+        </template>
+      </template>
+    </dom-bind>
+    <script>
+    (function(app) {
+      app.loading = true;
+      app.init = function() {
+        Promise.all([
+          fetch('processed.json').then((r) => r.json()),
+          fetch('report.json').then((r) => r.json())
+        ])
+        .then((data) => {
+          const processed = data[0] || [];
+          app.processedSize = processed.length;
+          app.reportData = data[1];
+          app._setPercentage(app.reportData);
+          app.loading = false;
+          app.hasData = true;
+        });
+      };
+
+      app._setPercentage = function(data) {
+        const r = data.reports;
+        let size = r.length;
+        let processedOk = 0;
+        let processedFail = 0;
+        r.forEach((i) => {
+          if (i.report.success) {
+            processedOk++;
+          } else {
+            processedFail++;
+          }
+        });
+        app.processedOk = processedOk;
+        app.processedOkperc = Math.round(processedOk * 100 / size);
+        app.processedFail = processedFail;
+        app.processedFailperc = Math.round(processedFail * 100 / size);
+      };
+
+      app._computeProgress = function(value) {
+        if (!value) {
+          value = 0;
+        }
+        return `width: ${value}%`;
+      };
+
+      app._computeReportResultClass = function(success) {
+        if (success === undefined) {
+          return '';
+        }
+        return success ? 'success' : 'error';
+      };
+
+      app._itemHasArguments = function(type) {
+        return type === 'report' ? false : true;
+      };
+      window.addEventListener('WebComponentsReady', app.init);
+    })(document.getElementById('demo'));
+  </script>
+  </body>
+</html>

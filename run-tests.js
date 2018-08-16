@@ -18,6 +18,7 @@ const blacklist = [
   'digital-clinician-services---pathology-orders-api-1.0.0-fat-raml.zip',
   'omnichannel-experience-api-1.0.0-fat-raml.zip',
   'sf-omni-channel-experience-api-1.0.0-fat-raml.zip',
+  'ppandya-omni-channel-experience-api-1.0.0-fat-raml.zip',
   // APIS causing AMF parser to fail
   'zuora-api-1.0.0-fat-raml.zip',
   'twitter-demo-tuesday-1.0.0-fat-raml.zip',
@@ -39,7 +40,8 @@ process.on('unhandledRejection', (reason, p) => {
  * APIs with AMF helper issues
  */
 const amfHelperIssues = [
-  'covea-customers-web-x-api-1.0.1-fat-raml.zip'
+  'covea-customers-web-x-api-1.0.1-fat-raml.zip',
+  'eventedapi_persistence-1.0.0-fat-raml.zip'
 ];
 
 

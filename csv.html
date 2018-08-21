@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <title>AMF - RMAL parsers test</title>
+</head>
+<body>
+  <script>
+  (function() {
+    const saveData = (function () {
+      const a = document.createElement('a');
+      a.style = 'display: none';
+      document.body.appendChild(a);
+      return function (data, fileName) {
+          const blob = new Blob([data], {type: 'application/csv'});
+          const url = window.URL.createObjectURL(blob);
+          a.href = url;
+          a.download = fileName;
+          a.click();
+          window.URL.revokeObjectURL(url);
+      };
+  }());
+
+  fetch('report.json').then((r) => r.json())
+  .then((data) => {
+    const lines = [];
+    lines[0] = 'API,Error,Investigation result,Is RAML parer / raml2obj issue,Is AMF issue,Reported';
+    for (let i = 0, len = data.reports.length; i < len; i++) {
+      if (data.reports[i].report.success) {
+        continue;
+      }
+      const logs = data.reports[i].report.logs;
+      if (!logs) {
+        continue;
+      }
+      const apiName = data.reports[i].report.api;
+      for (let j = 0, jLen = logs.length; j < jLen; j++) {
+        if (logs[j].success === false) {
+          lines.push(`"${apiName}","${logs[j].message}",,,,`);
+        }
+      }
+    }
+    saveData(lines.join('\n'), 'error.csv');
+    // document.writeln(lines.join('\n'));
+  });
+  })();
+  </script>
+</body>
+</html>

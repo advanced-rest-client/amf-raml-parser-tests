@@ -8,3 +8,4 @@ dist
 apis
 report.json
 processed.json
+test/*.zip

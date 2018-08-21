@@ -10,20 +10,37 @@ const path = require('path');
 const blacklist = [
   // APIS causing RAML JS parser to fail
   'digital-clinician-services---practitioner-management-api-1.0.0-fat-raml.zip',
-  'experience-mobile-api-2.0.0-fat-raml.zip',
+  'experience-mobile-api-2.0.0-fat-raml.zip', // AMF OK
   'digital-clinician-services---pathology-processing-api-1.0.0-fat-raml.zip',
-  'da_fernandez-omni-channel-experienc-1.0.0-fat-raml.zip',
+  'da_fernandez-omni-channel-experienc-1.0.0-fat-raml.zip', // AMF OK
   'digital-clinician-services---pathology-catalogues-api-2.0.0-fat-raml.zip',
-  'omani-api-1.0.0-fat-raml.zip',
+  'omani-api-1.0.0-fat-raml.zip', // AMF OK
   'digital-clinician-services---pathology-orders-api-1.0.0-fat-raml.zip',
-  'omnichannel-experience-api-1.0.0-fat-raml.zip',
-  'sf-omni-channel-experience-api-1.0.0-fat-raml.zip',
-  'ppandya-omni-channel-experience-api-1.0.0-fat-raml.zip',
+  'omnichannel-experience-api-1.0.0-fat-raml.zip', // AMF OK
+  'sf-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
+  'ppandya-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
+  '00187409-1.0.1-fat-raml.zip',
+  '00189163-api-exchange-issue-1.0.0-fat-raml.zip', // AMF OK
+  'amal-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
+  'arjenkoller-omni-channel-experience-1.0.0-fat-raml.zip', // AMF OK
+  'bigdemo-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
+  'binut-omni-channel-experience-1.0.0-fat-raml.zip', // AMF OK
+  'catalyst-retail-omnichannel-xp-api-1.0.0-fat-raml.zip',
+
   // APIS causing AMF parser to fail
-  'zuora-api-1.0.0-fat-raml.zip',
-  'twitter-demo-tuesday-1.0.0-fat-raml.zip',
+  '00187409-1.0.1-fat-raml.zip',
+  '1182-1.0.0-fat-raml.zip',
+  '00173974-1.0.0-fat-raml.zip',
+  'box-api-1.0.0-fat-raml.zip',
+  'bmw-1.0.0-fat-raml.zip',
+  'c4e-config-manager-api-2.0.2-fat-raml.zip',
+  'digital-clinician-services---practitioner-management-api-1.0.0-fat-raml.zip',
+  'digital-clinician-services---pathology-processing-api-1.0.0-fat-raml.zip',
+  'digital-clinician-services---pathology-catalogues-api-2.0.0-fat-raml.zip',
+  'digital-clinician-services---pathology-orders-api-1.0.0-fat-raml.zip',
   'ds-domainproxy-5.0.0-fat-raml.zip',
-  '1182-1.0.0-fat-raml.zip'
+  'twitter-demo-tuesday-1.0.0-fat-raml.zip',
+  'zuora-api-1.0.0-fat-raml.zip'
 ];
 
 process.on('uncaughtException', (err) => {
@@ -36,14 +53,46 @@ process.on('unhandledRejection', (reason, p) => {
   // application specific logging, throwing an error, or other logic here
 });
 
-/**
- * APIs with AMF helper issues
- */
-const amfHelperIssues = [
-  'covea-customers-web-x-api-1.0.1-fat-raml.zip',
-  'eventedapi_persistence-1.0.0-fat-raml.zip'
-];
+/*
+ APIs with AMF helper issues
 
+'covea-customers-web-x-api-1.0.1-fat-raml.zip',
+'eventedapi_persistence-1.0.0-fat-raml.zip',
+'aact-profile-api-1.0.5-fat-raml.zip',
+'account_address-1.0.0-fat-raml.zip',
+'accounts-1.0.0-fat-raml.zip'
+bookingmanagement-raml-jo-1.0.0-fat-raml.zip
+cache-cross-api-1.0.0-fat-raml.zip
+cards-global-2-1.0.0-fat-raml.zip
+*/
+
+/*
+Couldn't find main file
+
+accpartners-1.0.0-fat-raml.zip
+address-system-api-3.0.1-fat-raml.zip
+address-experience-api-1.0.4-fat-raml.zip
+adhocroundtripfare-1.0.0-fat-raml.zip
+agent-cumberland-experience-api-2.0.3-fat-raml.zip
+agent-cumberland-system-api-2.0.1-fat-raml.zip
+agent-experience-api-2.0.9-fat-raml.zip
+aim-cards-global-2.0.1-fat-raml.zip
+amc-deployer-1.0.0-fat-raml.zip
+authenticationproxyservice-1.0.0-fat-raml.zip
+bankingapi-1.0.0-fat-raml.zip
+bcs-orders-1.0.1-fat-raml.zip
+bic-case-management-api-1.0.1-fat-raml.zip
+calculate-policy-quote-process-api-2.0.0-fat-raml.zip
+ */
+
+/*
+Can't find RAML version.
+
+ca-customer-master-api---prod-1.0.0-fat-raml.zip
+ca-customer-master-api-preprod-1.0.0-fat-raml.zip
+ca-customer-master-api-prod-1.0.0-fat-raml.zip
+cacm-api-qa-1.0.0-fat-raml.zip
+ */
 
 /**
  * Initializes and runs the tests in sequence.
@@ -161,8 +210,9 @@ class RamlAmfParsersTest {
    * @return {Promise}
    */
   run() {
-    return this._clearReport()
-    .then(() => this._readProcessed())
+    // return this._clearReport()
+    // .then(() => this._readProcessed())
+    return this._readProcessed()
     .then(() => this._pickSample())
     .then((sample) => {
       this.apis = sample;

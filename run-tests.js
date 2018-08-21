@@ -26,21 +26,28 @@ const blacklist = [
   'bigdemo-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
   'binut-omni-channel-experience-1.0.0-fat-raml.zip', // AMF OK
   'catalyst-retail-omnichannel-xp-api-1.0.0-fat-raml.zip',
-
-  // APIS causing AMF parser to fail
-  '00187409-1.0.1-fat-raml.zip',
+  'digital-clinician-services---domain-api-1.0.0-fat-raml.zip',
+  'digital-clinician-services---pathology-observations-api-1.0.0-fat-raml.zip',
+  'digital-clinician-services---patient-management-api-1.0.0-fat-raml.zip',
+  'drewg2-omni-channel-experience-api-1.0.0-fat-raml.zip', // RAML OK
   '1182-1.0.0-fat-raml.zip',
   '00173974-1.0.0-fat-raml.zip',
   'box-api-1.0.0-fat-raml.zip',
   'bmw-1.0.0-fat-raml.zip',
   'c4e-config-manager-api-2.0.2-fat-raml.zip',
-  'digital-clinician-services---practitioner-management-api-1.0.0-fat-raml.zip',
-  'digital-clinician-services---pathology-processing-api-1.0.0-fat-raml.zip',
-  'digital-clinician-services---pathology-catalogues-api-2.0.0-fat-raml.zip',
-  'digital-clinician-services---pathology-orders-api-1.0.0-fat-raml.zip',
   'ds-domainproxy-5.0.0-fat-raml.zip',
   'twitter-demo-tuesday-1.0.0-fat-raml.zip',
-  'zuora-api-1.0.0-fat-raml.zip'
+  'zuora-api-1.0.0-fat-raml.zip',
+  'funds-1.0.2-fat-raml.zip',
+  'funds-prof-1.0.2-fat-raml.zip',
+  'gp-driver-process-1.0.3-fat-raml.zip',
+  'gp-meta-1.0.9-fat-raml.zip',
+  'gp-meta-process-1.0.3-fat-raml.zip',
+  'kappana-omni-channel-experiance-api-1.0.0-fat-raml.zip',
+  'kianping-omni-channel-experience-api-2.0.0-fat-raml.zip',
+  'mhra-e-device-1.0.6-fat-raml.zip',
+  'mhra-s-device-1.0.6-fat-raml.zip',
+  'minhacomunidade-1.0.0-fat-raml.zip'
 ];
 
 process.on('uncaughtException', (err) => {
@@ -56,42 +63,19 @@ process.on('unhandledRejection', (reason, p) => {
 /*
  APIs with AMF helper issues
 
-'covea-customers-web-x-api-1.0.1-fat-raml.zip',
-'eventedapi_persistence-1.0.0-fat-raml.zip',
-'aact-profile-api-1.0.5-fat-raml.zip',
-'account_address-1.0.0-fat-raml.zip',
-'accounts-1.0.0-fat-raml.zip'
-bookingmanagement-raml-jo-1.0.0-fat-raml.zip
-cache-cross-api-1.0.0-fat-raml.zip
-cards-global-2-1.0.0-fat-raml.zip
+kbs-csfdata-api-dev-1.0.0-fat-raml.zip
 */
 
 /*
 Couldn't find main file
 
-accpartners-1.0.0-fat-raml.zip
-address-system-api-3.0.1-fat-raml.zip
-address-experience-api-1.0.4-fat-raml.zip
-adhocroundtripfare-1.0.0-fat-raml.zip
-agent-cumberland-experience-api-2.0.3-fat-raml.zip
-agent-cumberland-system-api-2.0.1-fat-raml.zip
-agent-experience-api-2.0.9-fat-raml.zip
-aim-cards-global-2.0.1-fat-raml.zip
-amc-deployer-1.0.0-fat-raml.zip
-authenticationproxyservice-1.0.0-fat-raml.zip
-bankingapi-1.0.0-fat-raml.zip
-bcs-orders-1.0.1-fat-raml.zip
-bic-case-management-api-1.0.1-fat-raml.zip
-calculate-policy-quote-process-api-2.0.0-fat-raml.zip
+
  */
 
 /*
 Can't find RAML version.
 
-ca-customer-master-api---prod-1.0.0-fat-raml.zip
-ca-customer-master-api-preprod-1.0.0-fat-raml.zip
-ca-customer-master-api-prod-1.0.0-fat-raml.zip
-cacm-api-qa-1.0.0-fat-raml.zip
+
  */
 
 /**

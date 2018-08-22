@@ -9,45 +9,78 @@ const path = require('path');
 
 const blacklist = [
   // APIS causing RAML JS parser to fail
-  'digital-clinician-services---practitioner-management-api-1.0.0-fat-raml.zip',
-  'experience-mobile-api-2.0.0-fat-raml.zip', // AMF OK
-  'digital-clinician-services---pathology-processing-api-1.0.0-fat-raml.zip',
-  'da_fernandez-omni-channel-experienc-1.0.0-fat-raml.zip', // AMF OK
-  'digital-clinician-services---pathology-catalogues-api-2.0.0-fat-raml.zip',
-  'omani-api-1.0.0-fat-raml.zip', // AMF OK
-  'digital-clinician-services---pathology-orders-api-1.0.0-fat-raml.zip',
-  'omnichannel-experience-api-1.0.0-fat-raml.zip', // AMF OK
-  'sf-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
-  'ppandya-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
-  '00187409-1.0.1-fat-raml.zip',
-  '00189163-api-exchange-issue-1.0.0-fat-raml.zip', // AMF OK
-  'amal-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
-  'arjenkoller-omni-channel-experience-1.0.0-fat-raml.zip', // AMF OK
-  'bigdemo-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
-  'binut-omni-channel-experience-1.0.0-fat-raml.zip', // AMF OK
-  'catalyst-retail-omnichannel-xp-api-1.0.0-fat-raml.zip',
-  'digital-clinician-services---domain-api-1.0.0-fat-raml.zip',
-  'digital-clinician-services---pathology-observations-api-1.0.0-fat-raml.zip',
-  'digital-clinician-services---patient-management-api-1.0.0-fat-raml.zip',
-  'drewg2-omni-channel-experience-api-1.0.0-fat-raml.zip', // RAML OK
-  '1182-1.0.0-fat-raml.zip',
-  '00173974-1.0.0-fat-raml.zip',
-  'box-api-1.0.0-fat-raml.zip',
-  'bmw-1.0.0-fat-raml.zip',
-  'c4e-config-manager-api-2.0.2-fat-raml.zip',
-  'ds-domainproxy-5.0.0-fat-raml.zip',
-  'twitter-demo-tuesday-1.0.0-fat-raml.zip',
-  'zuora-api-1.0.0-fat-raml.zip',
-  'funds-1.0.2-fat-raml.zip',
-  'funds-prof-1.0.2-fat-raml.zip',
-  'gp-driver-process-1.0.3-fat-raml.zip',
-  'gp-meta-1.0.9-fat-raml.zip',
-  'gp-meta-process-1.0.3-fat-raml.zip',
-  'kappana-omni-channel-experiance-api-1.0.0-fat-raml.zip',
-  'kianping-omni-channel-experience-api-2.0.0-fat-raml.zip',
-  'mhra-e-device-1.0.6-fat-raml.zip',
-  'mhra-s-device-1.0.6-fat-raml.zip',
-  'minhacomunidade-1.0.0-fat-raml.zip'
+  // 'digital-clinician-services---practitioner-management-api-1.0.0-fat-raml.zip',
+  // 'experience-mobile-api-2.0.0-fat-raml.zip', // AMF OK
+  // 'digital-clinician-services---pathology-processing-api-1.0.0-fat-raml.zip',
+  // 'da_fernandez-omni-channel-experienc-1.0.0-fat-raml.zip', // AMF OK
+  // 'digital-clinician-services---pathology-catalogues-api-2.0.0-fat-raml.zip',
+  // 'omani-api-1.0.0-fat-raml.zip', // AMF OK
+  // 'digital-clinician-services---pathology-orders-api-1.0.0-fat-raml.zip',
+  // 'omnichannel-experience-api-1.0.0-fat-raml.zip', // AMF OK
+  // 'sf-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
+  // 'ppandya-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
+  // '00187409-1.0.1-fat-raml.zip',
+  // '00189163-api-exchange-issue-1.0.0-fat-raml.zip', // AMF OK
+  // 'amal-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
+  // 'arjenkoller-omni-channel-experience-1.0.0-fat-raml.zip', // AMF OK
+  // 'bigdemo-omni-channel-experience-api-1.0.0-fat-raml.zip', // AMF OK
+  // 'binut-omni-channel-experience-1.0.0-fat-raml.zip', // AMF OK
+  // 'catalyst-retail-omnichannel-xp-api-1.0.0-fat-raml.zip',
+  // 'digital-clinician-services---domain-api-1.0.0-fat-raml.zip',
+  // 'digital-clinician-services---pathology-observations-api-1.0.0-fat-raml.zip',
+  // 'digital-clinician-services---patient-management-api-1.0.0-fat-raml.zip',
+  // 'drewg2-omni-channel-experience-api-1.0.0-fat-raml.zip', // RAML OK
+  // '1182-1.0.0-fat-raml.zip',
+  // '00173974-1.0.0-fat-raml.zip',
+  // 'box-api-1.0.0-fat-raml.zip',
+  // 'bmw-1.0.0-fat-raml.zip',
+  // 'c4e-config-manager-api-2.0.2-fat-raml.zip',
+  // 'ds-domainproxy-5.0.0-fat-raml.zip',
+  // 'twitter-demo-tuesday-1.0.0-fat-raml.zip',
+  // 'zuora-api-1.0.0-fat-raml.zip',
+  // 'funds-1.0.2-fat-raml.zip',
+  // 'funds-prof-1.0.2-fat-raml.zip',
+  // 'gp-driver-process-1.0.3-fat-raml.zip',
+  // 'gp-meta-1.0.9-fat-raml.zip',
+  // 'gp-meta-process-1.0.3-fat-raml.zip',
+  // 'kappana-omni-channel-experiance-api-1.0.0-fat-raml.zip',
+  // 'kianping-omni-channel-experience-api-2.0.0-fat-raml.zip',
+  // 'mhra-e-device-1.0.6-fat-raml.zip',
+  // 'mhra-s-device-1.0.6-fat-raml.zip',
+  // 'minhacomunidade-1.0.0-fat-raml.zip',
+  // 'ds-domainproxy-510-dev-4.0.0-fat-raml.zip',
+  // 'retail-omnichannel-experience-api2-1.0.0-fat-raml.zip',
+  // 'portfolios-1.0.5-fat-raml.zip',
+  // 'poc-proxied-api-1.0.0-fat-raml.zip',
+  // 'patient-fhir-1.0.0-fat-raml.zip',
+  // 'p-people-1.0.0-fat-raml.zip',
+  // 'omnichannel_api-1.0.4-fat-raml.zip',
+  // 'omni-channel-experience-api-myao-1.0.1-fat-raml.zip',
+  // 'omni-channel-experience-api-1.0.0-fat-raml.zip',
+  // 'nwisman-omni-channel-experience-api-1.0.0-fat-raml.zip',
+  // 'northwellonfhir-1.0.0-fat-raml.zip',
+  // 'neverfail-system-api-1.0.1-fat-raml.zip',
+  // 'my-api-1.0.0-fat-raml.zip',
+  // 'magento-api-1.0.1-fat-raml.zip',
+  // 'kbs-csfdata-api-dev-1.0.0-fat-raml.zip',
+  // 'i-soup-4.0.0-fat-raml.zip',
+  // 'harward-case-1.0.0-fat-raml.zip',
+  // 'harvard-short-1.0.0-fat-raml.zip',
+  // 'harvard-api-1.0.0-fat-raml.zip',
+  // 'gpc-3.0.0-fat-raml.zip',
+  // 'fhir-patient-1.0.0-fat-raml.zip',
+  // 'eligibility-2.0.9-fat-raml.zip',
+  // 'rm-1.0.0-fat-raml.zip',
+  // 's-suez-routeman-ic-api-1.0.6-fat-raml.zip',
+  // 's-suez-routeman-shredding-api-1.0.4-fat-raml.zip',
+  // 's-suez-salesforce-api-1.0.0-fat-raml.zip',
+  // 'sabre-api-proxy-1.0.0-fat-raml.zip',
+  // 'sappan-omni-channel-experience-api-1.0.0-fat-raml.zip',
+  // 'serviceorderitem-1.0.0-fat-raml.zip',
+  // 'sri-omni-channel-experience-api-1.0.0-fat-raml.zip',
+  // 'twitter-api-1.0.0-fat-raml.zip',
+  // 'wi-loan-experience-1.0.3-fat-raml.zip',
+  // 'ws-workshop-api-1.0.0-fat-raml.zip'
 ];
 
 process.on('uncaughtException', (err) => {
@@ -194,6 +227,7 @@ class RamlAmfParsersTest {
    * @return {Promise}
    */
   run() {
+    this.processed = [];
     // return this._clearReport()
     // .then(() => this._readProcessed())
     return this._readProcessed()
@@ -203,6 +237,53 @@ class RamlAmfParsersTest {
       return this._processQueue();
     });
   }
+
+  runAmfParser() {
+    this.processed = [];
+    this.apisDir = 'test';
+    return this._pickSample()
+    .then((sample) => {
+      this.apis = sample;
+      console.log(sample);
+      return this._processRamlQueue();
+    });
+  }
+
+  _processRamlQueue() {
+    const api = this.apis.shift();
+    if (!api) {
+      return;
+    }
+    const loc = path.join(this.apisDir, api);
+    const ins = new AmfJsParserTestRunner(loc, {
+      interactive: this.interactive
+    });
+
+
+    return ins._unzip(ins.apiLocation)
+    .then((file) => {
+      if (!file) {
+        throw new Error('No api file');
+      }
+      ins._apiFile = file;
+      return ins._readApiType(file);
+    })
+    .then((type) => {
+      ins.apiType = type;
+      console.log('API type is ', type);
+    })
+    .then(() => ins.parseAmfParser())
+    .then(() => ins.cleanTempFiles())
+    .then(() => {
+      console.log(api + ' parsed correctly');
+    })
+    .catch((cause) => {
+      console.log(api + ' parse error', cause);
+      return ins.cleanTempFiles();
+    })
+    .then(() => this._processRamlQueue());
+  }
+
   /**
    * Runs next queue item.
    * @return {Promise}
@@ -308,5 +389,6 @@ class RamlAmfParsersTest {
   }
 }
 
-const apiTest = new RamlAmfParsersTest();
-apiTest.run();
+// const apiTest = new RamlAmfParsersTest();
+// apiTest.run();
+// apiTest.runAmfParser();

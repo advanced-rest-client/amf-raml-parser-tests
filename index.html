@@ -139,6 +139,11 @@
     (function(app) {
       app.loading = true;
       app.init = function() {
+        app.loadData();
+        setInterval(app.loadData, 2 * 60 * 1000);
+      };
+
+      app.loadData = function() {
         Promise.all([
           fetch('processed.json').then((r) => r.json()),
           fetch('report.json').then((r) => r.json())

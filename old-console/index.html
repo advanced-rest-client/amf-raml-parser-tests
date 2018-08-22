@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="bower_components/raml-docs-helpers/raml-docs-parser.html">
+  <link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="import" href="bower_components/paper-toggle-button/paper-toggle-button.html">
+  <link rel="import" href="bower_components/font-roboto/roboto.html">
+  <link rel="import" href="api-console.html">
+  <style>
+  raml-docs-parser {
+    display: none !important;
+  }
+  </style>
+</head>
+<body>
+  <raml-docs-parser></raml-docs-parser>
+  <api-console></api-console>
+  <script>
+  (function() {
+    const app = {
+      processApi: function(api) {
+        fetch(api)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Unable to load ${api}`);
+          }
+          return response.blob();
+        })
+        .then((blob) => {
+          blob.type = 'application/zip';
+          const e = {
+            detail: {
+              file: [blob]
+            }
+          };
+          const parser = document.querySelector('raml-docs-parser');
+          parser.fileListChanged(e);
+        });
+      },
+      messageHandler: function(e) {
+        switch (e.data.cmd) {
+          case 'load-api': app.processApi(e.data.src); break;
+          default: throw new Error('Unknown command');
+        }
+      },
+      setRaml: function(e) {
+        const apiConsole = document.querySelector('api-console');
+        apiConsole.raml = e.detail.raml;
+      }
+    };
+    window.addEventListener('message', app.messageHandler);
+    window.addEventListener('raml-ready', app.setRaml);
+  })();
+  </script>
+</body>
+</html>
